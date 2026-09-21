@@ -1,0 +1,6 @@
+{
+  "name": "E-Soko",
+  "description": "Marketplace Multi-Vendeurs — Le marché du Burundi, en un clic",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

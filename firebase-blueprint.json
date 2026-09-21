@@ -1,0 +1,235 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile with role and contact information",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "phone": { "type": "string" },
+        "role": { "type": "string", "enum": ["buyer", "seller", "admin"] },
+        "status": { "type": "string", "enum": ["active", "suspended"] },
+        "sellerStatus": { "type": "string", "enum": ["pending", "approved", "rejected"] },
+        "sellerApplicationReason": { "type": "string" },
+        "address": { "type": "string" },
+        "avatarUrl": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "name", "email", "phone", "role", "status", "createdAt"]
+    },
+    "Shop": {
+      "title": "Shop",
+      "description": "Commercial shop or merchant point of sale",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "sellerId": { "type": "string" },
+        "sellerName": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "logoUrl": { "type": "string" },
+        "bannerUrl": { "type": "string" },
+        "pickupLocation": { "type": "string" },
+        "pickupHours": { "type": "string" },
+        "city": { "type": "string" },
+        "phone": { "type": "string" },
+        "lumicashNumber": { "type": "string" },
+        "ecocashNumber": { "type": "string" },
+        "isVerified": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "sellerId", "sellerName", "name", "pickupLocation", "pickupHours", "city", "phone", "isVerified", "createdAt"]
+    },
+    "Category": {
+      "title": "Category",
+      "description": "Product category",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "iconName": { "type": "string" },
+        "slug": { "type": "string" }
+      },
+      "required": ["id", "name", "description", "iconName"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "Catalog product listed by a merchant",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "vendorId": { "type": "string" },
+        "shopId": { "type": "string" },
+        "shopName": { "type": "string" },
+        "categoryId": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "price": { "type": "number" },
+        "stock": { "type": "number" },
+        "images": { "type": "array" },
+        "isPublished": { "type": "boolean" },
+        "rating": { "type": "number" },
+        "reviewsCount": { "type": "number" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "vendorId", "shopId", "shopName", "categoryId", "name", "price", "stock", "isPublished", "createdAt"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Multi-vendor order with sub-orders split per seller",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "buyerId": { "type": "string" },
+        "buyerName": { "type": "string" },
+        "buyerPhone": { "type": "string" },
+        "buyerAddress": { "type": "string" },
+        "totalAmount": { "type": "number" },
+        "platformCommission": { "type": "number" },
+        "paymentOperator": { "type": "string", "enum": ["lumicash", "ecocash"] },
+        "paymentPhone": { "type": "string" },
+        "paymentStatus": { "type": "string", "enum": ["pending", "successful", "failed", "refunded"] },
+        "transactionId": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "confirmed", "partially_ready", "completed", "cancelled"] },
+        "subOrders": { "type": "array" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "buyerId", "buyerName", "buyerPhone", "totalAmount", "paymentOperator", "paymentStatus", "status", "createdAt"]
+    },
+    "Transaction": {
+      "title": "Transaction",
+      "description": "Mobile money ledger transaction",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "orderId": { "type": "string" },
+        "buyerId": { "type": "string" },
+        "buyerName": { "type": "string" },
+        "amount": { "type": "number" },
+        "platformCommission": { "type": "number" },
+        "vendorPayouts": { "type": "array" },
+        "operator": { "type": "string", "enum": ["lumicash", "ecocash"] },
+        "phoneNumber": { "type": "string" },
+        "ussdRef": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "successful", "failed", "refunded"] },
+        "createdAt": { "type": "string" },
+        "failureReason": { "type": "string" }
+      },
+      "required": ["id", "orderId", "buyerId", "amount", "operator", "phoneNumber", "ussdRef", "status", "createdAt"]
+    },
+    "Review": {
+      "title": "Review",
+      "description": "Buyer rating and review on a product",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "productId": { "type": "string" },
+        "productName": { "type": "string" },
+        "vendorId": { "type": "string" },
+        "buyerId": { "type": "string" },
+        "buyerName": { "type": "string" },
+        "rating": { "type": "number" },
+        "comment": { "type": "string" },
+        "vendorReply": { "type": "string" },
+        "isApproved": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "productId", "vendorId", "buyerId", "rating", "comment", "createdAt"]
+    },
+    "PlatformSettings": {
+      "title": "PlatformSettings",
+      "description": "Global marketplace configuration and commission rate",
+      "type": "object",
+      "properties": {
+        "commissionRate": { "type": "number" },
+        "lumicashEnabled": { "type": "boolean" },
+        "ecocashEnabled": { "type": "boolean" },
+        "officialSlogan": { "type": "string" },
+        "supportPhone": { "type": "string" },
+        "supportEmail": { "type": "string" }
+      },
+      "required": ["commissionRate", "lumicashEnabled", "ecocashEnabled", "supportPhone", "supportEmail"]
+    },
+    "AuditLog": {
+      "title": "AuditLog",
+      "description": "Administrative trace and security log",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "timestamp": { "type": "string" },
+        "userId": { "type": "string" },
+        "userName": { "type": "string" },
+        "userRole": { "type": "string" },
+        "action": { "type": "string" },
+        "details": { "type": "string" },
+        "severity": { "type": "string", "enum": ["info", "warning", "critical"] }
+      },
+      "required": ["id", "timestamp", "action", "details"]
+    },
+    "DirectMessage": {
+      "title": "DirectMessage",
+      "description": "Direct chat message between buyer and merchant",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "subOrderId": { "type": "string" },
+        "shopId": { "type": "string" },
+        "shopName": { "type": "string" },
+        "buyerId": { "type": "string" },
+        "buyerName": { "type": "string" },
+        "senderId": { "type": "string" },
+        "senderName": { "type": "string" },
+        "senderRole": { "type": "string", "enum": ["buyer", "seller"] },
+        "text": { "type": "string" },
+        "timestamp": { "type": "string" },
+        "read": { "type": "boolean" }
+      },
+      "required": ["id", "shopId", "buyerId", "senderId", "senderRole", "text", "timestamp", "read"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "User account profiles"
+    },
+    "/shops/{shopId}": {
+      "schema": { "$ref": "#/entities/Shop" },
+      "description": "Merchant stores"
+    },
+    "/categories/{categoryId}": {
+      "schema": { "$ref": "#/entities/Category" },
+      "description": "Catalog categories"
+    },
+    "/products/{productId}": {
+      "schema": { "$ref": "#/entities/Product" },
+      "description": "Products listed by merchants"
+    },
+    "/orders/{orderId}": {
+      "schema": { "$ref": "#/entities/Order" },
+      "description": "Customer orders and vendor sub-orders"
+    },
+    "/transactions/{transactionId}": {
+      "schema": { "$ref": "#/entities/Transaction" },
+      "description": "Mobile money payment audit records"
+    },
+    "/reviews/{reviewId}": {
+      "schema": { "$ref": "#/entities/Review" },
+      "description": "Product reviews"
+    },
+    "/platform_settings/{settingId}": {
+      "schema": { "$ref": "#/entities/PlatformSettings" },
+      "description": "Platform settings"
+    },
+    "/audit_logs/{logId}": {
+      "schema": { "$ref": "#/entities/AuditLog" },
+      "description": "Audit trail entries"
+    },
+    "/messages/{messageId}": {
+      "schema": { "$ref": "#/entities/DirectMessage" },
+      "description": "Direct communication between buyers and vendors"
+    }
+  }
+}
